@@ -1,0 +1,69 @@
+@Entity
+Tariff:
+  id,
+  name,
+  startDate,
+  endDate;
+
+@Entity
+BillingUser:
+  id,
+  @ManyToOne(Tariff.id)
+  tariffId,
+  keyName;
+
+@Entity
+TariffDetail:
+  id,
+  @ManyToOne(Tariff.id)
+  tariffId,
+  keyMetric,
+  cost;
+
+@Entity
+Calendar:
+  id,
+  groupName,        #Holydays
+  months,           #Janury,February,March,April,May,June,Jule,August,September,November,December
+  daysOfTheMonth,   #1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,
+  daysOfTheWeek;    #Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday
+
+@Entity
+ChangeCost:
+  id,
+  @ManyToOne(TariffDetail.id)
+  tariffDetailId,
+  @OneToMany(Calendar.groupName)
+  calendarGroupName,
+  ChangeCost;
+
+
+  SecondTypeOfCalendar:
+@Entity
+Day:
+  id,
+  groupName,
+  month,
+  dayOfMonth;
+
+@Entity
+DaysOfTheWeek:
+  id,
+  Monday,   #boolean
+  Tuesday,  #boolean
+  Wednesday,#boolean
+  Thursday, #boolean
+  Friday,   #boolean
+  Saturday, #boolean
+  Sunday;   #boolean
+
+@Entity
+ChangeCost:
+  id,
+  @ManyToOne(TariffDetail.id)
+  tariffDetailId,
+  @OneToMany(Day.groupName)
+  dayGroupName,
+  @OneToMany(DaysOfTheWeek.id)
+  daysOfTheWeekId,
+  ChangeCost;
